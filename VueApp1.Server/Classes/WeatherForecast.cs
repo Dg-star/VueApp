@@ -1,4 +1,4 @@
-namespace VueApp1.Server
+namespace VueApp1.Server.Classes
 {
     public class WeatherForecast
     {

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using VueApp1.Server.Classes;
 
 namespace VueApp1.Server.Controllers
 {
