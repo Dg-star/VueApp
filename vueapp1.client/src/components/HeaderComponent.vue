@@ -1,11 +1,12 @@
 <template>
+
         <div class="header-content">
             <div class="logo">
                 <img src="/src/assets/menu-icon.png" alt="Menu">
                 <span class="header-title bigger"><!--Служба управления доступом сотрудников--> Employee Access Control Service </span>
             </div>
             <div class="account">
-                <span><!--Иванов Иван Иванович--> Ivanov Ivan Ivanovich </span>
+                <span><!--Иванов Иван Иванович--> Ivanov Ваня Ivanovich </span>
             </div>
         </div>
 

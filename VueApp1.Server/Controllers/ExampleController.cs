@@ -1,28 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
-using VueApp1.Server.Classes;
+using VueApp1.Server;
 
 namespace VueApp1.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ExampleController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<ExampleController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public ExampleController(ILogger<ExampleController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<Example> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index => new Example
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                 TemperatureC = Random.Shared.Next(-20, 55),
@@ -30,5 +30,6 @@ namespace VueApp1.Server.Controllers
             })
             .ToArray();
         }
+
     }
 }

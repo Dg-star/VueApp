@@ -1,6 +1,6 @@
 namespace VueApp1.Server
 {
-    public class WeatherForecast
+    public class Example
     {
         public DateOnly Date { get; set; }
 
