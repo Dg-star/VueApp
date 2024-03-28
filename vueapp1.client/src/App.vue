@@ -1,38 +1,19 @@
-<script setup>
-    //import ContentComponent from './components/ContentComponent.vue'
-    import HeaderComponent from './components/HeaderComponent.vue'
-    //import ScreenComponent from './components/ScreenComponent.vue'
-</script>   
+<!--app.vue-->
 
 <template>
-    <header>
+    <div>
         <HeaderComponent />
-    </header>
-
-    <main>
-    </main>
+        <router-view class="p-top" />
+    </div>
 </template>
 
+<script setup>
+    import HeaderComponent from './components/HeaderComponent.vue'
+    import router from './router.js'
+</script>
+
 <style scoped>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
+    .p-top{
+        padding-top: 45px;
     }
-
-    header {
-        background-color: #333;
-        color: #fff;
-        padding: 10px;
-    }
-
-    main {
-        display: grid;
-        grid-template-columns: repeat(2, 20%);
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
 </style>

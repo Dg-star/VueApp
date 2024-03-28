@@ -1,6 +1,6 @@
 <template>
 
-        <div class="header-content">
+        <header>
             <div class="logo">
                 <img src="/src/assets/menu-icon.png" alt="Menu">
                 <span class="header-title bigger"><!--Служба управления доступом сотрудников--> Employee Access Control Service </span>
@@ -8,7 +8,7 @@
             <div class="account">
                 <span><!--Иванов Иван Иванович--> Ivanov Ваня Ivanovich </span>
             </div>
-        </div>
+        </header>
 
 </template>
 
@@ -19,7 +19,7 @@
 </script>
 
 <style scoped>
-    .header-content {
+    header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -55,11 +55,11 @@
     }
 
     main {
-        margin-top: 70px; /* Adjust this value to prevent content from being hidden behind the fixed header */
+        margin-top: 70px; 
         display: flex;
         justify-content: center;
         align-items: center;
-        height: calc(100vh - 70px); /* Adjusted height to fit remaining viewport space */
+        height: calc(100vh - 70px); 
     }
 
 </style>
