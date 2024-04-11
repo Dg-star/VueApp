@@ -1,9 +1,14 @@
-﻿using System.Reflection.PortableExecutable;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.PortableExecutable;
 
 namespace VueApp1.Server.Classes
 {
+    [Table("User")]
     public class User
     {
+        
+        [Key]
         public int user_id { get; set; }
         public string fullname { get; set; }
         public int phone_number { get; set; }

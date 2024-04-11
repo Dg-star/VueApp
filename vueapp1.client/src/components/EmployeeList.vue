@@ -1,5 +1,6 @@
 <!--EmployeeList.vue-->
 
+
 <template>
     <main>
         <h1>
@@ -42,31 +43,27 @@
 </template>
 
 <script>
+    import axios from "axios";
     export default {
         name: 'EmployeeList',
         data() {
             return {
-                employees: [
-                    {
-                        name: 'Ivanov Ivan Ivanovich',
-                        id: '123c1749-e8dc-41231-8e11-c4123ed352',
-                        contacts: '+79123456789',
-                        employment: 'Manager, Astrologer, Programmer',
-                        rolesCount: 3,
-                        accessRightsCount: 4,
-                        accountCount: 2
-                    },
-                    {
-                        name: 'Ivanov Ivan Ivanovich',
-                        id: '223c1749-e8dc-41231-8e11-c4123ed352',
-                        contacts: '+79123456789',
-                        employment: 'Manager',
-                        rolesCount: 3,
-                        accessRightsCount: 4,
-                        accountCount: 2
-                    }
-                ]
+                employees: []
             };
+        },
+        created() {
+            this.fetchEmployees();
+        },
+        methods: {
+            async fetchEmployees() {
+                try {
+                    const response = await axios.get('/api/employees');
+                    this.employees = response.data;
+                    console.log(response.data);
+                } catch (error) {
+                    console.error('Error fetching employees:', error);
+                }
+            }
         }
     }
 </script>
