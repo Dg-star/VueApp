@@ -33,6 +33,7 @@ namespace VueApp1.Server.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetEmployees()
         {
             var employees = await _context.Users.ToListAsync();
+            Console.WriteLine(employees);
             return Ok(employees);
         }
 
@@ -40,14 +41,21 @@ namespace VueApp1.Server.Controllers
         public async Task<ActionResult<User>> GetEmployee(int id)
         {
             var employee = await _context.Users.FindAsync(id);
-
+            Console.WriteLine(employee);
             if (employee == null)
             {
                 return NotFound();
             }
+            // явное приведение типа к Int32
+            // TODO 
+            employee.user_id = (int)(long)employee.user_id;
+            employee.phone_number = (int)(long)employee.phone_number;
+            employee.status_id = (int)(long)employee.status_id;
+            employee.organization_id = (int)(long)employee.organization_id;
+
             Console.WriteLine(employee);
             return Ok(employee);
-
         }
+
     }
 }

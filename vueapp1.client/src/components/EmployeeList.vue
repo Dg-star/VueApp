@@ -16,20 +16,18 @@
                         <th>Employment</th>
                         <th>Roles Count</th>
                         <th>Access Rights Count</th>
-                        <th>Account Count</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(employee, index) in employees" :key="index">
                         <td>
-                            <router-link :to="{ name: 'EmployeeCard', params: { id: employee.id }}">{{ employee.name }}</router-link>
+                            <router-link :to="{ name: 'EmployeeCard', params: { id: employee.user_id }}">{{ employee.fullname }}</router-link>
                         </td>
-                        <td>{{ employee.id }}</td>
-                        <td>{{ employee.contacts }}</td>
-                        <td>{{ employee.employment }}</td>
-                        <td>{{ employee.rolesCount }}</td>
-                        <td>{{ employee.accessRightsCount }}</td>
-                        <td>{{ employee.accountCount }}</td>
+                        <td>{{ employee.user_id }}</td>
+                        <td>{{ employee.phone_number }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.status_id }}</td>
+                        <td>{{ employee.supervisor }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -59,7 +57,7 @@
                 try {
                     const response = await axios.get('/api/employees');
                     this.employees = response.data;
-                    console.log(response.data);
+                    console.log(this.employees[0]);
                 } catch (error) {
                     console.error('Error fetching employees:', error);
                 }
@@ -67,6 +65,21 @@
         }
     }
 </script>
+
+<!--async fetchEmployees() {
+    try {
+        const response = await fetch('/api/employees'); // Обратите внимание на начальный слэш здесь
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log("Response data:", data);
+        this.employees = data;
+    } catch (error) {
+        console.error('Error fetching employees:', error);
+    }
+}-->
+
 
 <style scoped>
     main {

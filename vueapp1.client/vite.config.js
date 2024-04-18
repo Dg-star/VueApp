@@ -31,6 +31,7 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
     }
 }
 
+//const target = `http://localhost:5029`;
 const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
     env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7281';
 
@@ -47,6 +48,11 @@ export default defineConfig({
             '^/example': {
                 target,
                 secure: false
+            },
+            '/api/employees': {
+                target: 'http://localhost:5029', // Указываем целевой сервер
+                changeOrigin: true, // Включаем изменение происхождения
+                rewrite: (path) => path.replace(/^\/api\/employees/, '/api/employees'), // Изменяем путь
             }
         },
         port: 5173,

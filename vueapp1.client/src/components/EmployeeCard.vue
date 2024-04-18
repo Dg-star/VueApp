@@ -1,4 +1,4 @@
-<template>
+<!--<template>
     <div class="container">
         <h1 class="employee-card">
             <router-link to="/">Main page</router-link> /
@@ -80,10 +80,35 @@
             </div>
         </div>
     </div>
+</template>-->
+
+<template>
+    <div class="container">
+        <h1 class="employee-card">
+            <router-link to="/">Main page</router-link> /
+            <router-link to="/employee-list">Employee list</router-link> / Employee card
+        </h1>
+        <div v-if="employee" class="employee-info gray-background">
+            <h2 class="gray-block">{{ employee.fullname }}<span class="status"> ({{ employee.status_name }})</span><img class="edit-icon" src="@/assets/edit.png" alt="Edit" @click="openEditModal"></h2>
+            <p>Phone Number: {{ employee.phone_number }}</p>
+            <p>Email: {{ employee.email }}</p>
+            <p>Status Owner: {{ employee.status_owner }}</p>
+            <p>Cabinet: {{ employee.cabinet }}</p>
+            <p>Job Title: {{ employee.job_title }}</p>
+            <p>Supervisor: {{ employee.supervisor }}</p>
+            <p>Organization: {{ employee.organization }}</p>
+
+            <h4>Contact Information</h4>
+            <div class="separator"></div>
+            <p>Mobile Phone: {{ employee.phone_number }}</p>
+            <p>Email Address: {{ employee.email }}</p>
+        </div>
+    </div>
 </template>
 
 <script>
     import EditEmployeeForm from '@/components/EditEmployeeForm.vue';
+    import axios from 'axios';
 
     export default {
         name: 'EmployeeCard',
@@ -95,71 +120,22 @@
         },
         data() {
             return {
+                employee: null,
                 showEditModal: false,
-                employee: {
-                    fullName: 'Ivanov Ivan Ivanovich',
-                    status: 'Dismissed',
-                    gender: 'Male',
-                    dateOfBirth: '25.08.1530',
-                    id: '123c1749-e8dc-41231-8e11-c4123ed352',
-                    manager: 'Ivan Grozny',
-                    position: 'Supreme Ruler',
-                    office: 'Chambers',
-                    organization: 'Mother Russia',
-                    mobile: '+79123456789',
-                    email: 'pochta@msk.ru',
-                    appointments: [
-                        {
-                            type: 'Primary Appointment',
-                            title: 'Tsar, just Tsar',
-                            startDate: '7.07.1547',
-                            endDate: 'Present',
-                            absences: [
-                                { reason: 'Leave', startDate: '10.10.1581', endDate: '20.11.1981' },
-                                { reason: 'Sick Leave', startDate: '20.08.1582', endDate: '11.11.1982' },
-                                { reason: 'Sick Leave', startDate: '16.03.1584', endDate: '28.02.1984' }
-                            ]
-                        },
-                        {
-                            type: 'Additional Appointment',
-                            title: 'Commander-in-Chief',
-                            startDate: '11.07.1547',
-                            endDate: '28.03.1584',
-                            absences: [
-                                { reason: 'Leave', startDate: '10.10.1581', endDate: '20.11.1981' },
-                                { reason: 'Sick Leave', startDate: '20.08.1582', endDate: '11.11.1982' },
-                                { reason: 'Sick Leave', startDate: '16.03.1584', endDate: '28.02.1984' }
-                            ]
-                        }
-                    ],
-                    roles: [
-                        { name: 'User', startDate: '10.10.1581', endDate: '20.11.1981' },
-                        { name: 'Information Security Officer', startDate: '20.08.1582', endDate: '11.11.1982' },
-                        { name: 'Technical Administrator', startDate: '16.03.1584', endDate: '28.02.1984' }
-                    ],
-                    permissions: [
-                        { name: 'Start Event', startDate: '10.10.1581', endDate: '20.11.1981' },
-                        { name: 'End Event', startDate: '20.08.1582', endDate: '11.11.1982' },
-                        { name: 'Create Identification Information Repository', startDate: '16.03.1584', endDate: '28.02.1984' },
-                        { name: 'Archive Accounts', startDate: '16.03.1584', endDate: '28.02.1984' }
-                    ],
-                    adStatus: 'Blocked',
-                    adIdentifier: 'ivan',
-                    adValidity: '7.07.1547 - 28.03.1584',
-                    adPasswordExpiry: 'Unlimited',
-                    adLastLogin: '28.03.1984 05:00',
-                    adLastPasswordChange: '16.03.1984 15:00',
-                    internalStorageIdentifier: 'ivan',
-                    internalStorageValidity: 'Unlimited',
-                    internalStoragePasswordExpiry: 'Unlimited',
-                    internalStoragePasswordChangeRequired: 'Yes',
-                    internalStorageLastLogin: '28.03.1984 05:00',
-                    internalStorageLastPasswordChange: '16.03.1984 15:00',
-                    workSchedule: 'Mon-Sun: 00:00 - 24:00'
-                },
             };
         },
+        mounted() {
+            this.fetchEmployeeData();
+        },
         methods: {
+            async fetchEmployeeData() {
+                try {
+                    const response = await axios.get(`/api/employees/${this.id}`);
+                    this.employee = response.data;
+                } catch (error) {
+                    console.error('Error fetching employee data:', error);
+                }
+            },
             openEditModal() {
                 this.showEditModal = true;
             },
