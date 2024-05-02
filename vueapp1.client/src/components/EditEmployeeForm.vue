@@ -4,19 +4,45 @@
         <form @submit.prevent="submitForm" class="form">
             <div class="form-group">
                 <label for="fullName" class="form-label">Full Name:</label>
-                <input type="text" v-model="editedEmployee.fullName" id="fullName" class="form-input">
+                <input type="text" v-model="editedEmployee.fullname" id="fullName" class="form-input">
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="statusOwner" class="form-label">Status Owner:</label>
+                <input type="text" id="statusOwner" class="form-input">
             </div>
 
             <div class="form-group">
-                <label for="status" class="form-label">Status:</label>
-                <input type="text" v-model="editedEmployee.status" id="status" class="form-input">
+                <label for="cabinet" class="form-label">Cabinet:</label>
+                <input type="text" v-model="editedEmployee.cabinet" id="cabinet" class="form-input">
             </div>
 
             <div class="form-group">
-                <label for="gender" class="form-label">Gender:</label>
-                <input type="text" v-model="editedEmployee.gender" id="gender" class="form-input">
+                <label for="jobTitle" class="form-label">Job Title:</label>
+                <input type="text" v-model="editedEmployee.job_title" id="jobTitle" class="form-input">
             </div>
 
+            <div class="form-group">
+                <label for="supervisor" class="form-label">Supervisor:</label>
+                <input type="text" v-model="editedEmployee.supervisor" id="supervisor" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="organization" class="form-label">Organization:</label>
+                <input type="text" v-model="editedEmployee.organization" id="organization" class="form-input">
+            </div>
+            <h4>Contact Information:</h4>
+            <div class="form-group">
+                <label for="phone_number" class="form-label">Phone Number:</label>
+                <input type="text" v-model="editedEmployee.phone_number" id="phone_number" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="text" v-model="editedEmployee.email" id="email" class="form-input">
+            </div>
             <!-- ѕродолжайте добавл€ть остальные пол€ формы здесь -->
 
             <button type="submit" class="btn-submit">Save</button>
@@ -25,6 +51,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         name: 'EditEmployeeForm',
         props: {
@@ -32,15 +60,23 @@
         },
         data() {
             return {
-                editedEmployee: { ...this.employee }, //  опируем данные сотрудника дл€ редактировани€
+                editedEmployee: {
+                    ...this.employee,
+                    id: this.employee.user_id
+                }, //  опируем данные сотрудника дл€ редактировани€                
             };
         },
         methods: {
-            submitForm() {
-                // «десь должна быть логика сохранени€ изменений в базу данных
-                console.log('Employee data updated:', this.editedEmployee);
-                // «акрываем модальное окно после сохранени€
-                this.$emit('close');
+            async submitForm() {
+                try {
+                    // ќтправл€ем данные формы на сервер
+                    const response = await axios.put(`/api/employees/${this.editedEmployee.id}`, this.editedEmployee);
+                    console.log('Employee data updated:', this.editedEmployee);
+                    this.$emit('close');
+                    window.location.reload()
+                } catch (error) {
+                    console.error('Error updating employee data:', error);
+                }
             },
         },
     };

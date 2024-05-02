@@ -15,7 +15,10 @@ namespace VueApp1.Server.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly YourDbContext _context;
-
+        private bool EmployeeExists(int id)
+        {
+            return _context.Users.Any(e => e.user_id == id);
+        }
         public EmployeesController(IConfiguration configuration)
         {
             // Получаем строку подключения из IConfiguration
@@ -36,6 +39,35 @@ namespace VueApp1.Server.Controllers
             Console.WriteLine(employees);
             return Ok(employees);
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEmployee(int id, User employee)
+        {
+            if (id != employee.user_id)
+            {
+                return BadRequest("The provided id does not match the user_id in the request body.");
+            }
+
+            _context.Entry(employee).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetEmployee(int id)

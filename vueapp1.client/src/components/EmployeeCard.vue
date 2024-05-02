@@ -1,97 +1,11 @@
-<!--<template>
-    <div class="container">
-        <h1 class="employee-card">
-            <router-link to="/">Main page</router-link> /
-            <router-link to="/employee-list">Employee list</router-link> / Employee card
-        </h1>
-        <div class="employee-info gray-background">
-            <h2 class="gray-block">{{ employee.fullName }}<span class="status"> ({{ employee.status }})</span><img class="edit-icon" src="@/assets/edit.png" alt="Edit" @click="openEditModal"></h2>
-            <p>Gender: {{ employee.gender }}</p>
-            <p>Date of Birth: {{ employee.dateOfBirth }}</p>
-            <p>Identifier: {{ employee.id }}</p>
-            <p>Manager: {{ employee.manager }}</p>
-            <p>Position: {{ employee.position }}</p>
-            <p>Office: {{ employee.office }}</p>
-            <p>Organization: {{ employee.organization }}</p>
-
-            <h4>Contact Information</h4>
-            <div class="separator"></div>
-            <p>Mobile Phone: {{ employee.mobile }}</p>
-            <p>Email Address: {{ employee.email }}</p>
-
-            <div class="gray-background">
-                <h3 class="gray-block">Appointments <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
-                <div v-for="(appointment, index) in employee.appointments" :key="index" class="appointment">
-                    <h4>{{ appointment.type }}</h4>
-                    <div class="separator"></div>
-                    <p>Appointment: {{ appointment.title }}</p>
-                    <p>Start Date: {{ appointment.startDate }}</p>
-                    <p>End Date: {{ appointment.endDate }}</p>
-                    <ul>
-                        <li v-for="(absence, index) in appointment.absences" :key="index">{{ absence.reason }} from {{ absence.startDate }} to {{ absence.endDate }}</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="gray-background">
-                <h3 class="gray-block">Access Rights <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
-                <div class="roles">
-                    <h4>Roles</h4>
-                    <div class="separator"></div>
-                    <p v-for="(role, index) in employee.roles" :key="index">{{ role.name }}, active from {{ role.startDate }} to {{ role.endDate }}</p>
-                </div>
-
-                <div class="own-permissions">
-                    <h4>Own Permissions</h4>
-                    <div class="separator"></div>
-                    <p v-for="(permission, index) in employee.permissions" :key="index">{{ permission.name }}, active from {{ permission.startDate }} to {{ permission.endDate }}</p>
-                </div>
-            </div>
-
-            <div class="gray-background">
-                <h3 class="gray-block">Account Information <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
-                <div class="active-directory">
-                    <h4>Active Directory <span class="status"> ({{ employee.adStatus }})</span></h4>
-                    <div class="separator"></div>
-                    <p>Identifier: {{ employee.adIdentifier }}</p>
-                    <p>Account Validity: {{ employee.adValidity }}</p>
-                    <p>Password Expiry: {{ employee.adPasswordExpiry }}</p>
-                    <p>Last Login: {{ employee.adLastLogin }}</p>
-                    <p>Last Password Change: {{ employee.adLastPasswordChange }}</p>
-                </div>
-
-                <div class="internal-storage">
-                    <h4>Internal Storage</h4>
-                    <div class="separator"></div>
-                    <p>Identifier: {{ employee.internalStorageIdentifier }}</p>
-                    <p>Account Validity: {{ employee.internalStorageValidity }}</p>
-                    <p>Password Expiry: {{ employee.internalStoragePasswordExpiry }}</p>
-                    <p>Password Change Required: {{ employee.internalStoragePasswordChangeRequired }}</p>
-                    <p>Last Login: {{ employee.internalStorageLastLogin }}</p>
-                    <p>Last Password Change: {{ employee.internalStorageLastPasswordChange }}</p>
-                    <p>Work Schedule: {{ employee.workSchedule }}</p>
-                </div>
-            </div>
-        </div>
-        <div v-if="showEditModal" class="modal" style="left: 20px; top: 50px;">
-            <div class="modal-content">
-                <span class="close" @click="closeModal">&times;</span>
-                <edit-employee-form :employee="employee" @close="closeModal" />
-            </div>
-        </div>
-    </div>
-</template>-->
-
 <template>
     <div class="container">
         <h1 class="employee-card">
             <router-link to="/">Main page</router-link> /
             <router-link to="/employee-list">Employee list</router-link> / Employee card
         </h1>
-        <div v-if="employee" class="employee-info gray-background">
+        <div v-if="!showEditModal && employee" class="employee-info gray-background">
             <h2 class="gray-block">{{ employee.fullname }}<span class="status"> ({{ employee.status_name }})</span><img class="edit-icon" src="@/assets/edit.png" alt="Edit" @click="openEditModal"></h2>
-            <p>Phone Number: {{ employee.phone_number }}</p>
-            <p>Email: {{ employee.email }}</p>
             <p>Status Owner: {{ employee.status_owner }}</p>
             <p>Cabinet: {{ employee.cabinet }}</p>
             <p>Job Title: {{ employee.job_title }}</p>
@@ -103,6 +17,74 @@
             <p>Mobile Phone: {{ employee.phone_number }}</p>
             <p>Email Address: {{ employee.email }}</p>
         </div>
+
+
+
+
+        <div class="gray-background">
+            <h3 class="gray-block">Appointments <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
+            <div class="appointment">
+                <h4>Meeting</h4>
+                <div class="separator"></div>
+                <p>Appointment: Quarterly Review</p>
+                <p>Start Date: 2024-05-01</p>
+                <p>End Date: 2024-05-05</p>
+                <ul>
+                    <li>Out of office from 2024-05-01 to 2024-05-03</li>
+                    <li>Sick leave from 2024-05-04 to 2024-05-05</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="gray-background">
+            <h3 class="gray-block">Access Rights <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
+            <div class="roles">
+                <h4>Roles</h4>
+                <div class="separator"></div>
+                <p>Admin, active from 2024-01-01 to 2025-01-01</p>
+                <p>Manager, active from 2024-01-01 to 2025-01-01</p>
+            </div>
+
+            <div class="own-permissions">
+                <h4>Own Permissions</h4>
+                <div class="separator"></div>
+                <p>Access to HR Documents, active from 2024-01-01 to 2025-01-01</p>
+                <p>Access to Finance Reports, active from 2024-01-01 to 2025-01-01</p>
+            </div>
+        </div>
+
+        <div class="gray-background">
+            <h3 class="gray-block">Account Information <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
+            <div class="active-directory">
+                <h4>Active Directory <span class="status"> (Active)</span></h4>
+                <div class="separator"></div>
+                <p>Identifier: AD123456</p>
+                <p>Account Validity: 2024-01-01 to 2025-01-01</p>
+                <p>Password Expiry: 2024-12-31</p>
+                <p>Last Login: 2024-04-30</p>
+                <p>Last Password Change: 2024-04-15</p>
+            </div>
+
+            <div class="internal-storage">
+                <h4>Internal Storage</h4>
+                <div class="separator"></div>
+                <p>Identifier: INT789012</p>
+                <p>Account Validity: 2024-01-01 to 2025-01-01</p>
+                <p>Password Expiry: 2024-12-31</p>
+                <p>Password Change Required: No</p>
+                <p>Last Login: 2024-04-30</p>
+                <p>Last Password Change: 2024-04-15</p>
+                <p>Work Schedule: Monday to Friday, 9am to 5pm</p>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <EditEmployeeForm v-if="showEditModal" :employee="employee" @close="closeModal" />
     </div>
 </template>
 
@@ -122,6 +104,7 @@
             return {
                 employee: null,
                 showEditModal: false,
+                showEmployeeInfo: true, // Добавленное состояние для отображения списка сотрудников
             };
         },
         mounted() {
@@ -138,13 +121,17 @@
             },
             openEditModal() {
                 this.showEditModal = true;
+                this.showEmployeeInfo = false; // Скрываем список сотрудников при открытии модального окна
             },
             closeModal() {
                 this.showEditModal = false;
+                this.showEmployeeInfo = true; // Показываем список сотрудников при закрытии модального окна
             },
         },
     };
 </script>
+
+
 
 <style scoped>
     body {
@@ -263,3 +250,89 @@
         border-radius: 8px;
     }
 </style>
+
+
+
+<!--<template>
+    <div class="container">
+        <h1 class="employee-card">
+            <router-link to="/">Main page</router-link> /
+            <router-link to="/employee-list">Employee list</router-link> / Employee card
+        </h1>
+        <div class="employee-info gray-background">
+            <h2 class="gray-block">{{ employee.fullName }}<span class="status"> ({{ employee.status }})</span><img class="edit-icon" src="@/assets/edit.png" alt="Edit" @click="openEditModal"></h2>
+            <p>Gender: {{ employee.gender }}</p>
+            <p>Date of Birth: {{ employee.dateOfBirth }}</p>
+            <p>Identifier: {{ employee.id }}</p>
+            <p>Manager: {{ employee.manager }}</p>
+            <p>Position: {{ employee.position }}</p>
+            <p>Office: {{ employee.office }}</p>
+            <p>Organization: {{ employee.organization }}</p>
+
+            <h4>Contact Information</h4>
+            <div class="separator"></div>
+            <p>Mobile Phone: {{ employee.mobile }}</p>
+            <p>Email Address: {{ employee.email }}</p>
+
+            <div class="gray-background">
+                <h3 class="gray-block">Appointments <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
+                <div v-for="(appointment, index) in employee.appointments" :key="index" class="appointment">
+                    <h4>{{ appointment.type }}</h4>
+                    <div class="separator"></div>
+                    <p>Appointment: {{ appointment.title }}</p>
+                    <p>Start Date: {{ appointment.startDate }}</p>
+                    <p>End Date: {{ appointment.endDate }}</p>
+                    <ul>
+                        <li v-for="(absence, index) in appointment.absences" :key="index">{{ absence.reason }} from {{ absence.startDate }} to {{ absence.endDate }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="gray-background">
+                <h3 class="gray-block">Access Rights <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
+                <div class="roles">
+                    <h4>Roles</h4>
+                    <div class="separator"></div>
+                    <p v-for="(role, index) in employee.roles" :key="index">{{ role.name }}, active from {{ role.startDate }} to {{ role.endDate }}</p>
+                </div>
+
+                <div class="own-permissions">
+                    <h4>Own Permissions</h4>
+                    <div class="separator"></div>
+                    <p v-for="(permission, index) in employee.permissions" :key="index">{{ permission.name }}, active from {{ permission.startDate }} to {{ permission.endDate }}</p>
+                </div>
+            </div>
+
+            <div class="gray-background">
+                <h3 class="gray-block">Account Information <img class="edit-icon" src="@/assets/edit.png" alt="Edit"></h3>
+                <div class="active-directory">
+                    <h4>Active Directory <span class="status"> ({{ employee.adStatus }})</span></h4>
+                    <div class="separator"></div>
+                    <p>Identifier: {{ employee.adIdentifier }}</p>
+                    <p>Account Validity: {{ employee.adValidity }}</p>
+                    <p>Password Expiry: {{ employee.adPasswordExpiry }}</p>
+                    <p>Last Login: {{ employee.adLastLogin }}</p>
+                    <p>Last Password Change: {{ employee.adLastPasswordChange }}</p>
+                </div>
+
+                <div class="internal-storage">
+                    <h4>Internal Storage</h4>
+                    <div class="separator"></div>
+                    <p>Identifier: {{ employee.internalStorageIdentifier }}</p>
+                    <p>Account Validity: {{ employee.internalStorageValidity }}</p>
+                    <p>Password Expiry: {{ employee.internalStoragePasswordExpiry }}</p>
+                    <p>Password Change Required: {{ employee.internalStoragePasswordChangeRequired }}</p>
+                    <p>Last Login: {{ employee.internalStorageLastLogin }}</p>
+                    <p>Last Password Change: {{ employee.internalStorageLastPasswordChange }}</p>
+                    <p>Work Schedule: {{ employee.workSchedule }}</p>
+                </div>
+            </div>
+        </div>
+        <div v-if="showEditModal" class="modal" style="left: 20px; top: 50px;">
+            <div class="modal-content">
+                <span class="close" @click="closeModal">&times;</span>
+                <edit-employee-form :employee="employee" @close="closeModal" />
+            </div>
+        </div>
+    </div>
+</template>-->
